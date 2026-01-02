@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes" />
+  <title>Admin Panel | Code Masters</title>
+  <meta name="description" content="Admin Panel placeholder for Code Masters." />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="Code Masters Home">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-title">
+          <strong>Code Masters</strong>
+          <span>Projects. Guidance. Delivery.</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav href="/index.html">Home</a>
+        <a data-nav href="/services.html">Services</a>
+        <a data-nav href="/portfolio.html">Portfolio</a>
+        <a data-nav href="/pricing.html">Pricing</a>
+        <a data-nav href="/admin.html" class="btn small admin-pill">Admin Panel</a>
+        <a data-nav href="/contact.html" class="btn small">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="h1" style="font-size:38px">Admin Panel</h1>
+        <p class="section-sub">Login using your <strong>ADMIN token</strong> to view inquiries saved in MongoDB.</p>
+
+        <div id="loginView" class="panel" style="padding:18px" hidden>
+          <div class="grid-2">
+            <div class="card">
+              <h3>Admin Login</h3>
+              <p>Enter the same value as `ADMIN_TOKEN` in your server `.env` file.</p>
+              <div class="field" style="margin-top:12px">
+                <div class="label">Admin Token</div>
+                <input id="token" class="input" type="password" placeholder="Enter admin token" />
+              </div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+                <button id="saveToken" class="btn primary" type="button">Login</button>
+                <a class="btn" href="/contact.html">Go to Contact</a>
+              </div>
+              <div id="adminStatusLogin" hidden></div>
+            </div>
+
+            <div class="card">
+              <h3>Security</h3>
+              <p>
+                Keep your token private. Do not share it. For stronger security later, we can add OTP and IP allow-list.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="dataView" class="panel" style="padding:18px" hidden>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div>
+              <div style="font-weight:800">Inquiries</div>
+              <div class="mini">Showing <span id="count">0</span> results</div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button id="loadBtn" class="btn" type="button">Refresh</button>
+              <button id="exportBtn" class="btn" type="button">Export CSV</button>
+              <button id="logout" class="btn" type="button">Logout</button>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top:14px">
+            <div class="field">
+              <div class="label">Search (name / phone / email / type / message)</div>
+              <input id="search" class="input" placeholder="e.g. final year, MERN, 7875..." />
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <div class="label">From (YYYY-MM-DD)</div>
+                <input id="from" class="input" placeholder="2026-01-01" />
+              </div>
+              <div class="field">
+                <div class="label">To (YYYY-MM-DD)</div>
+                <input id="to" class="input" placeholder="2026-01-31" />
+              </div>
+            </div>
+          </div>
+
+          <div class="field" style="max-width:220px">
+            <div class="label">Limit</div>
+            <select id="limit" class="select">
+              <option>25</option>
+              <option selected>50</option>
+              <option>100</option>
+              <option>200</option>
+            </select>
+          </div>
+
+          <div id="adminStatusData" hidden></div>
+
+          <div style="overflow:auto;margin-top:14px;border:1px solid var(--border);border-radius:16px">
+            <table style="width:100%;border-collapse:collapse">
+              <thead>
+                <tr style="text-align:left;background:rgba(11,18,32,.55)">
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Created</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Client</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Phone</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Email</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Deadline</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Budget</th>
+                  <th style="padding:12px;border-bottom:1px solid var(--border)">Message</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="font-weight:800">Code Masters</div>
+        <div class="mini">Phone/WhatsApp: +91-7385726096 | Email: manswiproject11@gmail.com</div>
+      </div>
+      <div class="mini">© <span id="y"></span> Code Masters</div>
+    </div>
+  </footer>
+
+  <div class="fab-wrap" aria-label="Quick actions">
+    <a class="fab whatsapp" href="https://wa.me/917385726096" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M19.11 17.57c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.31.2-.58.07-.27-.13-1.12-.41-2.13-1.31-.79-.7-1.32-1.56-1.47-1.83-.16-.27-.02-.41.12-.55.12-.12.27-.31.41-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.47-.07-.13-.61-1.47-.83-2.01-.22-.52-.44-.45-.61-.46h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.64 1.12 2.82.13.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.58.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.22-.63.22-1.17.16-1.28-.07-.11-.25-.18-.52-.31z"/>
+        <path d="M26.67 5.33A13.25 13.25 0 0 0 5.06 21.45L4 28l6.72-1.76A13.25 13.25 0 0 0 28 16c0-3.54-1.38-6.87-3.33-10.67zM16 26.4c-1.86 0-3.69-.5-5.29-1.44l-.38-.22-4 .99 1.07-3.88-.25-.4A10.33 10.33 0 1 1 26.33 16 10.34 10.34 0 0 1 16 26.4z"/>
+      </svg>
+    </a>
+    <a class="fab call" href="tel:+917385726096" aria-label="Call">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.85 21 3 13.15 3 3c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+      </svg>
+    </a>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
