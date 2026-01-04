@@ -8,14 +8,11 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
+      "handle": "filesystem"
     },
     {
-      "src": "/(.*\\.(js|css|jpg|jpeg|png|gif|svg|ico|webp|woff|woff2|ttf|eot))",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     },
     {
       "src": "/(.*)",
@@ -23,4 +20,3 @@
     }
   ]
 }
-
