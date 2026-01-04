@@ -8,7 +8,8 @@
   ],
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/(.*\\.(?:css|js|mjs|map|jpg|jpeg|png|gif|svg|ico|webp|woff|woff2|ttf|eot))$",
+      "dest": "/server.js"
     },
     {
       "src": "/api/(.*)",
