@@ -17,6 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function buildWhatsAppLink(message) {
   const base = 'https://wa.me/917385726096';
-  const text = message || 'Hi Manswi, I want to start a project with Code Masters.\nProject Type: \nTech Stack: \nDeadline: \nBudget: \n';
+  const text = message || 'Hi Manswi, I want to start a project with ORIVEX.\nProject Type: \nTech Stack: \nDeadline: \nBudget: \n';
   return `${base}?text=${encodeURIComponent(text)}`;
 }

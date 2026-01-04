@@ -6,7 +6,7 @@ function setStatus(el, type, text) {
   el.hidden = false;
 }
 
-function getFormData(form) {
+function getFormData(form) { 
   const fd = new FormData(form);
   return Object.fromEntries(fd.entries());
 }
@@ -14,7 +14,7 @@ function getFormData(form) {
 function buildWhatsAppLinkFromInquiry(data) {
   const base = 'https://wa.me/917385726096';
   const lines = [
-    'Hi Manswi, I want to start a project with Code Masters.',
+    'Hi Manswi, I want to start a project with ORIVEX.',
     `Name: ${data.name || ''}`,
     `Phone: ${data.phone || ''}`,
     `Email: ${data.email || ''}`,
